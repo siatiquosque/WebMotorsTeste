@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">WebMotorsTest</string>
+    <string name="details_color_label">Cor</string>
+    <string name="details_km_label">KM</string>
+    <string name="details_year_label">Ano</string>
+</resources>

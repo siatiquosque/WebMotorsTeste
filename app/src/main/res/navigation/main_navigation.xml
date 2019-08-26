@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/carsFragment">
+    <fragment
+        android:id="@+id/carsFragment"
+        android:name="br.com.siatiquosque.webmotorstest.cars.CarsFragment"
+        android:label="CarsFragment" >
+        <action
+            android:id="@+id/action_carsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="br.com.siatiquosque.webmotorstest.details.DetailsFragment"
+        android:label="DetailsFragment" />
+</navigation>
