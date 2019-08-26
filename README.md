@@ -36,3 +36,4 @@ It's based on Google Samples Project, implementing the new architecture MVVM.
 - [Retrofit](https://github.com/square/retrofit) - Networking.
 - [RXjava](https://github.com/ReactiveX/RxJava) - Async calls.
 - [Glide](https://github.com/bumptech/glide) - Library to load images async.
+- [Dagger](https://github.com/google/dagger) - Library to Dependency Injection.
