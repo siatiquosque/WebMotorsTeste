@@ -1,23 +1,16 @@
 package br.com.siatiquosque.webmotorstest.cars
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import br.com.siatiquosque.webmotorstest.R
-import br.com.siatiquosque.webmotorstest.util.NetworkState
 import br.com.siatiquosque.webmotorstest.util.Status
-import dagger.android.AndroidInjection
-import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_cars.*
 import javax.inject.Inject
@@ -40,8 +33,17 @@ class CarsFragment : DaggerFragment() {
 
         val carsViewModel = ViewModelProviders.of(this, viewModelFactory)[CarsViewModel::class.java]
 
-        val adapter = CarsAdapter(requireContext()) {
-            findNavController().navigate(R.id.detailsFragment, bundleOf(Pair("DETAILS", it)))
+        val adapter = CarsAdapter(requireContext()) { id, image, value ->
+            val extras = FragmentNavigatorExtras(
+                image to "imageCar",
+                value to "valueCar"
+            )
+            findNavController().navigate(
+                R.id.action_carsFragment_to_detailsFragment,
+                bundleOf(Pair("DETAILS", id)),
+                null,
+                extras
+            )
         }
 
         rvCars.adapter = adapter
@@ -54,8 +56,6 @@ class CarsFragment : DaggerFragment() {
         carsViewModel.networkState?.observe(this, Observer {
             swCars.isRefreshing = it.status == Status.RUNNING
         })
-
-
 
         swCars.setOnRefreshListener {
             carsViewModel.invalidationDataSource()

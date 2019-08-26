@@ -3,17 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/carsFragment">
+    app:startDestination="@+id/carsFragment">
     <fragment
         android:id="@+id/carsFragment"
         android:name="br.com.siatiquosque.webmotorstest.cars.CarsFragment"
-        android:label="CarsFragment" >
+        android:label="Carros">
         <action
             android:id="@+id/action_carsFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="br.com.siatiquosque.webmotorstest.details.DetailsFragment"
-        android:label="DetailsFragment" />
+        android:label="Detalhes do Carro" />
 </navigation>

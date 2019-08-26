@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -13,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.siatiquosque.webmotorstest.R
 import br.com.siatiquosque.webmotorstest.vo.Car
 import com.bumptech.glide.Glide
+import java.text.NumberFormat
+import java.util.*
 
-class CarsAdapter(val context: Context, val onClick: (Int) -> Unit) :
+class CarsAdapter(val context: Context, val onClick: (Int, ImageView, TextView) -> Unit) :
     PagedListAdapter<Car, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarsViewHolder {
         val view =
@@ -30,16 +33,15 @@ class CarsAdapter(val context: Context, val onClick: (Int) -> Unit) :
         private val image: ImageView = view.findViewById(R.id.imgCar)
         private val value: TextView = view.findViewById(R.id.tvValue)
         private val name: TextView = view.findViewById(R.id.tvCarName)
-        private val year: TextView = view.findViewById(R.id.tvYear)
-        private val km: TextView = view.findViewById(R.id.tvKm)
-        private val root: ConstraintLayout = view.findViewById(R.id.root)
+        private val yearKM: TextView = view.findViewById(R.id.tvYearKm)
+        private val root: CardView = view.findViewById(R.id.root)
         //        private val color: TextView = view.findViewById(R.id.tvColor)
         private var car: Car? = null
 
         fun bind(
             context: Context,
             car: Car?,
-            onClick: (Int) -> Unit
+            onClick: (Int, ImageView, TextView) -> Unit
         ) {
             this.car = car
             Glide
@@ -47,13 +49,12 @@ class CarsAdapter(val context: Context, val onClick: (Int) -> Unit) :
                 .load(car?.image)
                 .centerCrop()
                 .into(image)
-            value.text = car?.price
+            value.text = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
+                .format(car?.price?.replace(",", ".")?.toDouble())
             name.text = car?.model
-            year.text = "${car?.yearModel}/${car?.yearFab}"
-            km.text = car?.km.toString()
-//            color.text = car?.color
+            yearKM.text = "${car?.yearModel}/${car?.yearFab} | ${car?.km}KM"
             root.setOnClickListener {
-                onClick(car?.id ?: 0)
+                onClick(car?.id ?: 0, image, value)
             }
 
         }
